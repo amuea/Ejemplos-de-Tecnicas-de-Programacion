@@ -1,79 +1,65 @@
-class Personaje:
+class Persona:
 
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
+    def __init__(self, nombre, edad, peso, estatura, ocupación):
         self.nombre = nombre
-        self.fuerza = fuerza
-        self.inteligencia = inteligencia
-        self.defensa = defensa
-        self.vida = vida
+        self.edad = edad
+        self.peso = peso
+        self.estatura = estatura
+        self.ocupación = ocupación
 
     def atributos(self):
         print(self.nombre, ":", sep="")
-        print("·Fuerza:", self.fuerza)
-        print("·Inteligencia:", self.inteligencia)
-        print("·Defensa:", self.defensa)
-        print("·Vida:", self.vida)
+        print("·Edad:", self.edad)
+        print("·Peso:", self.peso)
+        print("·Estatura:", self.estatura)
+        print("·Ocupación:", self.ocupación)
 
-    def subir_nivel(self, fuerza, inteligencia, defensa):
-        self.fuerza = self.fuerza + fuerza
-        self.inteligencia = self.inteligencia + inteligencia
-        self.defensa = self.defensa + defensa
+    def subir_nivel(self, edad, peso, estatura):
+        self.edad = self.edad + edad
+        self.peso = self.peso + peso
+        self.estatura = self.estatura + estatura
 
     def esta_vivo(self):
         return self.vida > 0
 
     def morir(self):
         self.vida = 0
-        print(self.nombre, "ha muerto")
+        print(self.nombre, "no")
 
-    def daño(self, enemigo):
-        return self.fuerza - enemigo.defensa
+    def año(self, datos):
+        return self.edad - datos.estatura
 
-    def atacar(self, enemigo):
-        daño = self.daño(enemigo)
-        enemigo.vida = enemigo.vida - daño
-        print(self.nombre, "ha realizado", daño, "puntos de daño a", enemigo.nombre)
-        if enemigo.esta_vivo():
-            print("Vida de", enemigo.nombre, "es", enemigo.vida)
+    def masa_corporal(self, datos):
+        año = self.año(datos)
+        datos.vida = datos.vida - año
+        print(self.nombre, "ha realizado", año, "puntos de año a", datos.nombre)
+        if datos.esta_vivo():
+            print("Vida de", datos.nombre, "es", datos.vida)
         else:
-            enemigo.morir()
+            datos.morir()
 
 
-class Guerrero(Personaje):
+class Maria(Persona):
 
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, espada):
-        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
-        self.espada = espada
+    def __init__(self, nombre, edad, peso, estatura, ocupación):
+        super().__init__(nombre, edad, peso, estatura, ocupación)
+        self.educadora = educadora
 
-    def cambiar_arma(self):
-        opcion = int(input("Elige un arma: (1) Acero Valyrio, daño 8. (2) Matadragones, daño 10"))
+    def cambiar_ocupación(self):
+        opcion = int(input("Elige una ocupación: (1) Educadora, año 8. (2) Comunicadora, año 10"))
         if opcion == 1:
-            self.espada = 8
+            self.educadora = 8
         elif opcion == 2:
-            self.espada = 10
+            self.educadora = 10
         else:
-            print("Número de arma incorrecta")
+            print("Número de ocupación incorrecta")
 
     def atributos(self):
         super().atributos()
-        print("·Espada:", self.espada)
+        print("·Educadora:", self.educadora)
 
-    def daño(self, enemigo):
-        return self.fuerza * self.espada - enemigo.defensa
-
-
-class Mago(Personaje):
-
-    def __init__(self, nombre, fuerza, inteligencia, defensa, vida, libro):
-        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
-        self.libro = libro
-
-    def atributos(self):
-        super().atributos()
-        print("·Libro:", self.libro)
-
-    def daño(self, enemigo):
-        return self.inteligencia * self.libro - enemigo.defensa
+    def año(self, datos):
+        return self.edad * self.peso - datos.estatura
 
 
 def combate(jugador_1, jugador_2):
